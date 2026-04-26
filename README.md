@@ -30,3 +30,5 @@ A calculator web app built with Streamlit.
 ├── app.py
 ├── requirements.txt
 └── README.md
+
+Running: https://calculator-app-n7hkswhseytqjdmgyi8egp.streamlit.app/
