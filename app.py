@@ -1,38 +1,43 @@
 import streamlit as st
 
 st.title("SIMPLE CALCULATOR")
-st.write("A simple calculator for doing addition, subtraction and other operations")
 
 # Initialize session state
 if "history" not in st.session_state:
     st.session_state.history = []
 if "last_result" not in st.session_state:
     st.session_state.last_result = None
+if "num1_input" not in st.session_state:
+    st.session_state.num1_input = 0.0
+if "num2_input" not in st.session_state:
+    st.session_state.num2_input = 0.0
+
+# Safety: fix stale/invalid widget values from older sessions
+if not isinstance(st.session_state.num1_input, (int, float)):
+    st.session_state.num1_input = 0.0
+if not isinstance(st.session_state.num2_input, (int, float)):
+    st.session_state.num2_input = 0.0
 
 
-# Callback for reuse button
 def use_last_result():
-    st.session_state.num1_input = st.session_state.last_result
+    if st.session_state.last_result is not None:
+        st.session_state.num1_input = float(st.session_state.last_result)
 
 
 # Inputs
 col1, col2 = st.columns(2)
+
 with col1:
-    num1_input = st.number_input(
-        "Enter the 1st number:", value=0.0, step=1.0, key="num1_input"
-    )
+    num1_input = st.number_input("Enter the 1st number:", step=1.0, key="num1_input")
+
 with col2:
-    num2_input = st.number_input(
-        "Enter the 2nd number:", value=0.0, step=1.0, key="num2_input"
-    )
+    num2_input = st.number_input("Enter the 2nd number:", step=1.0, key="num2_input")
+    
 
 operation = st.selectbox("Choose the operation:", ["+", "-", "*", "//", "%", "/"])
 
 if st.session_state.last_result is not None:
-    st.button(
-        "Use Last Result as First Number",
-        on_click=use_last_result,
-    )
+    st.button("Use Last Result as First Number", on_click=use_last_result)
 
 # Calculate
 result = None
@@ -63,20 +68,19 @@ if st.button("Calculate"):
         st.session_state.last_result = result
         st.subheader("Calculation Result")
         st.success(f"{num1_input} {operation} {num2_input} = {result}")
-        history_entry = f"{num1_input} {operation} {num2_input} = {result}"
-        st.session_state.history.append(history_entry)
+        st.session_state.history.append(f"{num1_input} {operation} {num2_input} = {result}")
 
 # History section
 st.divider()
 st.subheader("Previous Calculations")
 
-if len(st.session_state.history) > 0:
-    for item in reversed(st.session_state.history):  # newest first
+if st.session_state.history:
+    for item in reversed(st.session_state.history):
         st.write(item)
 
+    # Clear only history; keep last_result for reuse feature
     if st.button("Clear History"):
         st.session_state.history = []
-        st.session_state.last_result = None
         st.success("History cleared.")
 else:
     st.info("No calculations yet.")
