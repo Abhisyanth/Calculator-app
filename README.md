@@ -28,6 +28,7 @@ A calculator web app built with Streamlit.
 https://calculator-app-n7hkswhseytqjdmgyi8egp.streamlit.app/
 
 ## GitHub
+https://github.com/Abhisyanth/Calculator-app
 
 ## Project Structure
 
