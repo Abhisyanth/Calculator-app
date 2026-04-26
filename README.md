@@ -23,6 +23,12 @@ A calculator web app built with Streamlit.
 - Python
 - Streamlit
 
+
+## Live Demo
+https://calculator-app-n7hkswhseytqjdmgyi8egp.streamlit.app/
+
+## GitHub
+
 ## Project Structure
 
 ```text
@@ -31,4 +37,10 @@ A calculator web app built with Streamlit.
 ├── requirements.txt
 └── README.md
 
-Running: https://calculator-app-n7hkswhseytqjdmgyi8egp.streamlit.app/
+
+
+
+
+
+
+
